@@ -1,0 +1,391 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Local dev: sqlite  |  Production: change to "postgresql" and update prisma.ts adapter
+datasource db {
+  provider = "sqlite"
+}
+
+enum WorkType {
+  STRATEGIC
+  TASK
+  BAU
+  MICRO
+}
+
+enum TaskStatus {
+  INTAKE
+  IN_PROGRESS
+  REVIEW
+  BLOCKED
+  ON_HOLD
+  DONE
+  CANCELLED
+}
+
+
+enum DurationType {
+  FULL_DAY
+  HALF_DAY
+  TWO_HOURS
+}
+
+enum NotificationType {
+  NEW_INTAKE
+  ASSIGNED_TO_ME
+  MISSING_OWNER
+  MISSING_DUE_DATE
+  CAPACITY_OVERLOAD
+  PROJECT_LIMIT_EXCEEDED
+  AT_RISK
+  OVERDUE
+}
+
+model TeamMember {
+  id                String        @id @default(cuid())
+  name              String
+  email             String        @unique
+  role              String   @default("COPYWRITER")
+  weeklyCapacity    Float         @default(40.0)
+  workingDays       Json          @default("[\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\"]")
+  avatarUrl         String?
+  isActive          Boolean       @default(true)
+  leaves            Leave[]
+  assignments       Assignment[]
+  assignedNextSteps NextStep[]
+  squads            SquadMember[]
+  generalTodos      GeneralTodo[]
+  userAccount       UserAccount?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+model GeneralTodo {
+  id           String                @id @default(cuid())
+  teamMemberId String
+  teamMember   TeamMember            @relation(fields: [teamMemberId], references: [id], onDelete: Cascade)
+  description  String
+  isComplete   Boolean               @default(false)
+  isArchived   Boolean               @default(false)
+  completedAt  DateTime?
+  dueDate      DateTime?
+  url          String?
+  sortOrder    Int                   @default(0)
+  subtasks     GeneralTodoSubtask[]
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+}
+
+model GeneralTodoSubtask {
+  id          String      @id @default(cuid())
+  todoId      String
+  todo        GeneralTodo @relation(fields: [todoId], references: [id], onDelete: Cascade)
+  description String
+  isComplete  Boolean     @default(false)
+  sortOrder   Int         @default(0)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Squad {
+  id        String        @id @default(cuid())
+  name      String
+  color     String        @default("#6366f1")
+  sortOrder Int           @default(0)
+  members   SquadMember[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model SquadMember {
+  squadId      String
+  squad        Squad      @relation(fields: [squadId], references: [id], onDelete: Cascade)
+  teamMemberId String
+  teamMember   TeamMember @relation(fields: [teamMemberId], references: [id], onDelete: Cascade)
+
+  @@id([squadId, teamMemberId])
+}
+
+model Leave {
+  id           String     @id @default(cuid())
+  teamMemberId String
+  teamMember   TeamMember @relation(fields: [teamMemberId], references: [id], onDelete: Cascade)
+  startDate    DateTime
+  endDate      DateTime
+  reason       String?
+  isHalfDay    Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+}
+
+model Task {
+  id                 String         @id @default(cuid())
+  mondayItemId       String?        @unique
+  mondayBoardId      String?
+  name               String
+  description        String?
+  status             TaskStatus     @default(INTAKE)
+  effort             Int            @default(2)
+  workType           WorkType       @default(TASK)
+  startDate          DateTime?
+  dueDate            DateTime?
+  deadline           DateTime?
+  mondayLink         String?
+  briefLink          String?
+  figmaLink          String?
+  iconikLink         String?
+  slackThreadLink    String?
+  internalSlackLink  String?
+  customLinks        Json?
+  mondayUpdates      Json?
+  notes              String?
+  catNumber          String?
+  channel            String?
+  stakeholder        String?
+  opsLead            String?
+  priorityLevel      String?
+  urgency            String?
+  isInIntake         Boolean        @default(true)
+  currentPhaseType   String?
+  hasBuild           Boolean        @default(false)
+  hasLocalization    Boolean        @default(false)
+  assignments        Assignment[]
+  tempAssignments    TempAssignment[]
+  nextSteps          NextStep[]
+  phases             TaskPhase[]
+  notifications      Notification[]
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+}
+
+model Assignment {
+  id             String       @id @default(cuid())
+  taskId         String
+  task           Task         @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  teamMemberId   String
+  teamMember     TeamMember   @relation(fields: [teamMemberId], references: [id], onDelete: Cascade)
+  phaseId        String?      // JSON array of phase IDs this assignment covers
+  startDate      DateTime
+  dueDate        DateTime
+  durationDays   Float        @default(1.0)
+  durationType   DurationType @default(FULL_DAY)
+  capacityUnits  Float        @default(1.0)
+  notes          String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([taskId, teamMemberId])
+}
+
+model TempAssignment {
+  id            String       @id @default(cuid())
+  taskId        String
+  task          Task         @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  guestName     String
+  startDate     DateTime
+  dueDate       DateTime
+  durationType  DurationType @default(FULL_DAY)
+  capacityUnits Float        @default(1.0)
+  notes         String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model NextStep {
+  id             String                   @id @default(cuid())
+  taskId         String
+  task           Task                     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  description    String
+  startDate      DateTime?
+  dueDate        DateTime?
+  durationType   String                   @default("FULL_DAY")
+  assignedToId   String?
+  assignedTo     TeamMember?              @relation(fields: [assignedToId], references: [id], onDelete: SetNull)
+  isComplete     Boolean                  @default(false)
+  sortOrder      Int                      @default(0)
+  url            String?
+  checklistItems NextStepChecklistItem[]
+  createdAt      DateTime                 @default(now())
+  updatedAt      DateTime                 @updatedAt
+}
+
+model NextStepChecklistItem {
+  id          String    @id @default(cuid())
+  nextStepId  String
+  nextStep    NextStep  @relation(fields: [nextStepId], references: [id], onDelete: Cascade)
+  description String
+  isComplete  Boolean   @default(false)
+  sortOrder   Int       @default(0)
+  url         String?
+  dueDate     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model WorkTypeConfig {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  workType  WorkType @unique
+  color     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  type      NotificationType
+  title     String
+  body      String
+  taskId    String?
+  task      Task?            @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  isRead    Boolean          @default(false)
+  sentSlack Boolean          @default(false)
+  createdAt DateTime         @default(now())
+}
+
+model SlackTemplate {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  label     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AppSettings {
+  id                    String  @id @default(cuid())
+  appTitle              String  @default("Lifecycle Planner")
+  mondayBoardId         String?
+  mondayApiToken        String?
+  slackWebhookUrl       String?
+  slackBotToken         String?
+  slackChannelId        String?
+  maxActiveProjectsPerWeek Int  @default(2)
+  weeklyCapacityDefault Float   @default(40.0)
+  weeklyHoursCapacity   Int     @default(40)
+  notifEmail      Boolean @default(false)
+  notifSlack      Boolean @default(false)
+  notifOnIntake   Boolean @default(true)
+  notifOnOverdue  Boolean @default(true)
+  notifOnAtRisk   Boolean @default(true)
+  notifOnCapacity Boolean @default(true)
+  notifOnAssigned Boolean @default(true)
+  updatedAt             DateTime @updatedAt
+}
+
+model Automation {
+  id           String           @id @default(cuid())
+  name         String
+  isActive     Boolean          @default(true)
+  triggerType  String           // "INTAKE_ADDED" | "WORK_TYPE" | "STATUS_CHANGE"
+  triggerValue String?          // e.g. "STRATEGIC", "IN_PROGRESS"
+  steps        AutomationStep[]
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+}
+
+enum PhaseType {
+  INTAKE
+  BRIEF_REVIEW
+  KICKOFF
+  BRAINSTORM
+  CREATIVE_DEVELOPMENT
+  CREATIVE_REVIEW
+  SH_REVIEW
+  CREATIVE_REFINEMENT
+  ASSET_FINALIZATION
+  BUILD
+  LOCALIZATION
+}
+
+enum PhaseStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  DONE
+  BLOCKED
+}
+
+model TaskPhase {
+  id        String      @id @default(cuid())
+  taskId    String
+  task      Task        @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  // A String, not the PhaseType enum — lets BAU tasks use free-text custom
+  // phase names (e.g. "QA Sweep") alongside the standard creative pipeline
+  // phases used by regular briefs.
+  type      String
+  status    PhaseStatus @default(NOT_STARTED)
+  startDate DateTime?
+  endDate   DateTime?
+  notes     String?
+  roundTag  String?
+  sortOrder Int         @default(0)
+  // Manual AM/PM placement for the day(s) this phase overlaps another phase
+  // in the calendar view. Null = auto (earliest phase by sortOrder → AM).
+  amPm      String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model AutomationStep {
+  id           String              @id @default(cuid())
+  automationId String
+  automation   Automation          @relation(fields: [automationId], references: [id], onDelete: Cascade)
+  description  String
+  durationType String              @default("FULL_DAY")
+  assignedToId String?
+  sortOrder    Int                 @default(0)
+  subtasks     AutomationSubtask[]
+}
+
+model AutomationSubtask {
+  id          String         @id @default(cuid())
+  stepId      String
+  step        AutomationStep @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  description String
+  sortOrder   Int            @default(0)
+}
+
+enum UserRole {
+  ADMIN
+  USER
+  VIEWER
+}
+
+model UserAccount {
+  id               String      @id @default(cuid())
+  name             String
+  email            String      @unique
+  role             UserRole    @default(USER)
+  teamMemberId     String?     @unique
+  teamMember       TeamMember? @relation(fields: [teamMemberId], references: [id], onDelete: SetNull)
+  isActive         Boolean     @default(true)
+  brainDumpContent String?     // legacy field kept for data preservation
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+model Holiday {
+  id        String    @id @default(cuid())
+  name      String
+  date      DateTime
+  endDate   DateTime?
+  type      String    @default("PUBLIC") // "PUBLIC" | "COMPANY"
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model PhaseConfig {
+  id                  String   @id @default(cuid())
+  key                 String   @unique
+  label               String
+  color               String
+  estMin              Int?
+  estMax              Int?
+  sortOrder           Int      @default(0)
+  supportsRoundTag    Boolean  @default(false)
+  // Hours this phase contributes to a team member's daily capacity, per
+  // working day the phase is active. Drives team capacity calculations.
+  capacityHoursPerDay Float    @default(4)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
