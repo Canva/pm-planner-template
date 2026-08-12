@@ -18,6 +18,7 @@ import {
   CheckCircle,
   Save,
 } from "lucide-react";
+import { useWorkTypes } from "@/lib/work-types-context";
 
 type TriggerType = "INTAKE_ADDED" | "WORK_TYPE" | "STATUS_CHANGE";
 
@@ -52,11 +53,10 @@ interface TeamMember {
   role: string;
 }
 
-function describeTrigger(triggerType: TriggerType, triggerValue?: string | null): string {
+function describeTrigger(triggerType: TriggerType, triggerValue: string | null | undefined, workTypeLabels: Record<string, string>): string {
   if (triggerType === "INTAKE_ADDED") return "When any task is added to Intake";
   if (triggerType === "WORK_TYPE") {
-    const labels: Record<string, string> = { STRATEGIC: "Strategic", TASK: "Task", BAU: "BAU" };
-    return `When work type is ${labels[triggerValue ?? ""] ?? triggerValue ?? "..."}`;
+    return `When work type is ${workTypeLabels[triggerValue ?? ""] ?? triggerValue ?? "..."}`;
   }
   if (triggerType === "STATUS_CHANGE") {
     const labels: Record<string, string> = {
@@ -86,6 +86,7 @@ interface AutomationFormProps {
 }
 
 function AutomationForm({ initial, members, onSave, onCancel }: AutomationFormProps) {
+  const { workTypeOrder, workTypeMeta } = useWorkTypes();
   const [name, setName] = useState(initial?.name ?? "");
   const [triggerType, setTriggerType] = useState<TriggerType>(initial?.triggerType ?? "INTAKE_ADDED");
   const [triggerValue, setTriggerValue] = useState(initial?.triggerValue ?? "");
@@ -236,10 +237,9 @@ function AutomationForm({ initial, members, onSave, onCancel }: AutomationFormPr
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
               >
                 <option value="">Select...</option>
-                <option value="STRATEGIC">Strategic</option>
-                <option value="TASK">Task</option>
-                <option value="BAU">BAU</option>
-                <option value="MICRO">Micro</option>
+                {workTypeOrder.map((key) => (
+                  <option key={key} value={key}>{workTypeMeta[key]?.label ?? key}</option>
+                ))}
               </select>
             ) : (
               <select
@@ -369,6 +369,8 @@ function AutomationForm({ initial, members, onSave, onCancel }: AutomationFormPr
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function AutomationsPage() {
+  const { workTypeMeta } = useWorkTypes();
+  const workTypeLabels = Object.fromEntries(Object.entries(workTypeMeta).map(([k, v]) => [k, v.label]));
   const [automations, setAutomations] = useState<Automation[]>([]);
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
@@ -590,7 +592,7 @@ export default function AutomationsPage() {
 
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold text-gray-900">{automation.name}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">{describeTrigger(automation.triggerType, automation.triggerValue)}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">{describeTrigger(automation.triggerType, automation.triggerValue, workTypeLabels)}</p>
                       <p className="text-xs text-gray-400 mt-1">
                         {automation.steps.length} step{automation.steps.length !== 1 ? "s" : ""}
                         {totalSubtasks(automation) > 0 && ` · ${totalSubtasks(automation)} sub-task${totalSubtasks(automation) !== 1 ? "s" : ""}`}

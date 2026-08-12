@@ -42,6 +42,7 @@ import {
   PhaseType, TaskPhase, ROUND_TAGS,
 } from "@/types";
 import { usePhases } from "@/lib/phases-context";
+import { useWorkTypes } from "@/lib/work-types-context";
 import { buildPhaseRuns, ROW_GAP } from "@/lib/phase-day-slots";
 
 // ── Inline member picker ──────────────────────────────────────────────────────
@@ -1346,6 +1347,7 @@ export default function TaskDetailPage() {
   // its name, timeline, phase, assignees, or other metadata.
   const restrictedFieldsLocked = role === "USER";
   const { phaseMeta } = usePhases();
+  const { workTypeOrder, workTypeMeta } = useWorkTypes();
   // Remember where the user came from so Back and post-delete redirect go there
   const backUrl = useRef<string>("/intake");
   useEffect(() => {
@@ -1630,10 +1632,9 @@ export default function TaskDetailPage() {
                       onChange={(e) => setEditData({ ...editData, workType: e.target.value as any })}
                       className="border border-gray-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-300"
                     >
-                      <option value="STRATEGIC">Strategic</option>
-                      <option value="TASK">Task</option>
-                      <option value="BAU">BAU</option>
-                      <option value="MICRO">Micro</option>
+                      {workTypeOrder.map((key) => (
+                        <option key={key} value={key}>{workTypeMeta[key]?.label ?? key}</option>
+                      ))}
                     </select>
                   ) : (
                     <WorkTypeBadge type={task.workType} />

@@ -14,6 +14,7 @@ import { isBefore, isAfter } from "date-fns";
 import { formatDate, cn } from "@/lib/utils";
 import { todayPH, phCalendarDate } from "@/lib/tz";
 import { usePhases } from "@/lib/phases-context";
+import { useWorkTypes } from "@/lib/work-types-context";
 import type { Task, TeamMember, CapacityCheck, WorkType, TaskStatus, PhaseType, TaskPhase, Squad } from "@/types";
 
 type QueueView = "list" | "kanban";
@@ -214,7 +215,7 @@ function taskToEditState(t: Task): EditState {
 
 // ── Edit modal ────────────────────────────────────────────────────────────────
 function EditModal({
-  edit, setEdit, onSave, onClose, saving, phaseOrder, phaseMeta,
+  edit, setEdit, onSave, onClose, saving, phaseOrder, phaseMeta, workTypeOrder, workTypeMeta,
 }: {
   edit: EditState;
   setEdit: (e: EditState) => void;
@@ -223,6 +224,8 @@ function EditModal({
   saving: boolean;
   phaseOrder: string[];
   phaseMeta: Record<string, { label: string; color: string }>;
+  workTypeOrder: string[];
+  workTypeMeta: Record<string, { label: string; color: string }>;
 }) {
   const set = (patch: Partial<EditState>) => setEdit({ ...edit, ...patch });
 
@@ -324,10 +327,9 @@ function EditModal({
               onChange={(e) => set({ workType: e.target.value as WorkType })}
               className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
             >
-              <option value="STRATEGIC">Strategic</option>
-              <option value="TASK">Task</option>
-              <option value="BAU">BAU</option>
-              <option value="MICRO">Micro</option>
+              {workTypeOrder.map((key) => (
+                <option key={key} value={key}>{workTypeMeta[key]?.label ?? key}</option>
+              ))}
             </select>
           </div>
 
@@ -796,6 +798,7 @@ function GroupSection({
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default function IntakePage() {
   const { phaseOrder, phaseMeta } = usePhases();
+  const { workTypeOrder, workTypeMeta } = useWorkTypes();
 
   // Derived group helpers — recalculated when phase config changes
   const GROUP_ORDER: GroupKey[] = [...phaseOrder as GroupKey[], ...TERMINAL_GROUPS];
@@ -1141,10 +1144,9 @@ export default function IntakePage() {
                   onChange={(e) => setNewTask({ ...newTask, workType: e.target.value as WorkType })}
                   className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none"
                 >
-                  <option value="STRATEGIC">Strategic</option>
-                  <option value="TASK">Task</option>
-                  <option value="BAU">BAU</option>
-                  <option value="MICRO">Micro</option>
+                  {workTypeOrder.map((key) => (
+                    <option key={key} value={key}>{workTypeMeta[key]?.label ?? key}</option>
+                  ))}
                 </select>
                 <div className="flex items-center gap-1.5">
                   <label className="text-xs text-gray-400 whitespace-nowrap">
@@ -1506,6 +1508,8 @@ export default function IntakePage() {
           saving={saving}
           phaseOrder={phaseOrder}
           phaseMeta={phaseMeta}
+          workTypeOrder={workTypeOrder}
+          workTypeMeta={workTypeMeta}
         />
       )}
 

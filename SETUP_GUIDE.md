@@ -130,7 +130,21 @@ hours of capacity each phase consumes per day. This template seeds a generic 11-
 pipeline (Intake → Brief Review → ... → Build → Localization) as a starting point; rename or
 prune it to match how your team actually works. No code edits needed for this part.
 
-## 8. Connect monday.com and Slack (optional, both independent)
+## 8. Configure your brief types
+
+**Admin → Brief Types** lets you rename, recolor, reorder, add, or remove the categories used to
+tag briefs (defaults: Strategic, Task, BAU, Micro). Changes apply immediately, no code edits
+needed — with one exception:
+
+**BAU is protected** and can't be renamed, recolored, or deleted from this page. Unlike the other
+types, BAU isn't just a label — it skips the phase pipeline entirely and changes several field
+labels elsewhere in the app (e.g. "Project name" instead of "Brief name"). If your team doesn't
+use that no-pipeline workflow at all, just don't use the BAU type when creating briefs; if you want
+a *different* no-pipeline type, that's a code change (search `=== "BAU"` in `src/app/intake/`,
+`src/components/tasks/kanban-board.tsx`, and `src/app/tasks/[id]/page.tsx`), not something to force
+through this page.
+
+## 9. Connect monday.com and Slack (optional, both independent)
 
 Both live under **Admin → Settings** and are stored per-instance in the database — nothing to put
 in `.env` for these.
@@ -146,7 +160,7 @@ scopes, install it to your workspace, copy the bot token (`xoxb-...`), invite th
 target channel, and paste the token + channel ID into Admin → Settings. Use the "Send test
 message" button there to confirm it's wired up before relying on it.
 
-## 9. Back up your data
+## 10. Back up your data
 
 `scripts/backup-db.sh` dumps the SQLite database to `prisma/backup.sql` and commits+pushes it to
 this repo's git remote. It expects this repo to actually have a remote with push access — point it
@@ -167,8 +181,9 @@ else's tool":
 
 | Change it via | Examples |
 |---|---|
-| Admin UI (no code) | team name/branding, team roster, capacity, phases, monday/Slack config, user accounts |
+| Admin UI (no code) | team name/branding, team roster, capacity, phases, brief types (except BAU), monday/Slack config, user accounts |
 | One-line code edit | adding a new role name (`PRESET_ROLES`), all-phase / locked-phase role behavior (`ALL_PHASE_ROLES`, `ROLE_LOCKED_PHASE` in `src/types/index.ts`) |
+| Not supported via UI | changing BAU's no-pipeline behavior, or giving another brief type the same treatment (`PROTECTED_WORK_TYPES` in `src/types/index.ts`, plus the `=== "BAU"` checks it protects) |
 | Bigger change | adding real authentication, moving off SQLite to a shared Postgres, multi-team support in one deployment |
 
 Everything under "Admin UI" is exactly what it sounds like — safe to click around and change

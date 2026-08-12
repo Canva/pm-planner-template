@@ -18,7 +18,9 @@ export async function POST(req: NextRequest) {
       : undefined;
 
     const teamName = settings.appTitle || "Lifecycle Team";
-    const blocks = buildWeeklySummaryBlocks(summary, appUrl, mondayBoardUrl, teamName);
+    const workTypes = await prisma.workTypeConfig.findMany();
+    const workTypeLabels = Object.fromEntries(workTypes.map((w) => [w.key, w.label]));
+    const blocks = buildWeeklySummaryBlocks(summary, appUrl, mondayBoardUrl, teamName, workTypeLabels);
     const text = `${teamName} Weekly Summary — ${new Date(summary.weekStart).toLocaleDateString()}`;
 
     await sendSlackMessage(settings.slackChannelId, text, blocks, settings.slackBotToken);

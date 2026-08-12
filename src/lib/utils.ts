@@ -1,8 +1,8 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { format, isAfter, isBefore, addDays, getDay, startOfDay } from "date-fns";
-import type { Task, TaskStatus, WorkType } from "@/types";
-import { WORK_TYPE_COLORS, STATUS_COLORS, PRIORITY_COLORS } from "@/types";
+import type { Task, TaskStatus } from "@/types";
+import { STATUS_COLORS, PRIORITY_COLORS } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -33,10 +33,6 @@ export function isAtRisk(task: Task, daysThreshold = 3): boolean {
   const threshold = addDays(todayStart, daysThreshold);
   // Due today or within the next N days (but not already overdue)
   return !isBefore(due, todayStart) && isBefore(due, threshold);
-}
-
-export function getWorkTypeColor(workType: WorkType): string {
-  return WORK_TYPE_COLORS[workType];
 }
 
 export function getStatusColor(status: TaskStatus): string {

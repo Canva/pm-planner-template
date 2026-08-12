@@ -14,8 +14,10 @@ import {
 import Link from "next/link";
 import { PHASE_META } from "@/types";
 import type { WeeklySummary, Task, PhaseType } from "@/types";
+import { useWorkTypes } from "@/lib/work-types-context";
 
 export default function DashboardPage() {
+  const { workTypeOrder, workTypeMeta } = useWorkTypes();
   const [summary, setSummary] = useState<WeeklySummary | null>(null);
   const [weekDate, setWeekDate] = useState(new Date());
   const [loading, setLoading] = useState(true);
@@ -333,23 +335,19 @@ export default function DashboardPage() {
               <div className="bg-white border border-gray-200 rounded-xl p-4">
                 <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Work Type Mix</h3>
                 <div className="space-y-2.5">
-                  {[
-                    { key: "STRATEGIC", label: "Strategic", color: "#6366f1" },
-                    { key: "TASK", label: "Task", color: "#f59e0b" },
-                    { key: "BAU", label: "BAU", color: "#10b981" },
-                    { key: "MICRO", label: "Micro", color: "#06b6d4" },
-                  ].map(({ key, label, color }) => {
-                    const count = workTypeBreakdown[key as keyof typeof workTypeBreakdown] ?? 0;
+                  {workTypeOrder.map((key) => {
+                    const meta = workTypeMeta[key];
+                    const count = workTypeBreakdown[key] ?? 0;
                     const total = Math.max(activeTasks.length, 1);
                     const pct = Math.round((count / total) * 100);
                     return (
                       <div key={key}>
                         <div className="flex justify-between text-xs text-gray-600 mb-1">
-                          <span>{label}</span>
+                          <span>{meta?.label ?? key}</span>
                           <span>{count} ({pct}%)</span>
                         </div>
                         <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                          <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: color }} />
+                          <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: meta?.color ?? "#9ca3af" }} />
                         </div>
                       </div>
                     );

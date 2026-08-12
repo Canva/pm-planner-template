@@ -21,6 +21,7 @@ import {
   X,
   LogOut,
   Layers,
+  Tag,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/lib/use-theme";
@@ -46,6 +47,7 @@ const NAV_ITEMS: { href: string; label: string; icon: any; minRole: UserRole }[]
 const ADMIN_ITEMS = [
   { href: "/admin/team",            label: "Team",            icon: Users         },
   { href: "/admin/phases",          label: "Phases",          icon: Layers        },
+  { href: "/admin/work-types",      label: "Brief Types",     icon: Tag           },
   { href: "/admin/slack-templates", label: "Slack Templates", icon: MessageSquare },
   { href: "/automations",           label: "Automations",     icon: Zap           },
   { href: "/admin/settings",        label: "Settings",        icon: Settings      },

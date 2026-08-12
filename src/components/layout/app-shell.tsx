@@ -6,6 +6,7 @@ import { Sidebar } from "./sidebar";
 import { UserSelectScreen } from "./user-select-screen";
 import { useCurrentUser } from "@/lib/use-current-user";
 import { PhasesProvider } from "@/lib/phases-context";
+import { WorkTypesProvider } from "@/lib/work-types-context";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -35,6 +36,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <PhasesProvider>
+    <WorkTypesProvider>
       <div className="flex h-screen overflow-hidden">
         {/* Sidebar — animated slide */}
         <div
@@ -60,6 +62,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </div>
+    </WorkTypesProvider>
     </PhasesProvider>
   );
 }

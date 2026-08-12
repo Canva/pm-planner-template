@@ -51,7 +51,8 @@ export function buildWeeklySummaryBlocks(
   summary: WeeklySummary,
   appUrl?: string,
   mondayBoardUrl?: string,
-  teamName = "Lifecycle Team"
+  teamName = "Lifecycle Team",
+  workTypeLabels: Record<string, string> = {}
 ): object[] {
   const weekLabel = `${format(new Date(summary.weekStart), "MMM d")} – ${format(new Date(summary.weekEnd), "MMM d, yyyy")}`;
 
@@ -79,7 +80,9 @@ export function buildWeeklySummaryBlocks(
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `*Work Type Breakdown*\n🟣 Strategic: ${summary.workTypeBreakdown.STRATEGIC}  🟡 Task: ${summary.workTypeBreakdown.TASK}  🟢 BAU: ${summary.workTypeBreakdown.BAU}  🔵 Micro: ${summary.workTypeBreakdown.MICRO}`,
+        text: `*Work Type Breakdown*\n${Object.entries(summary.workTypeBreakdown)
+          .map(([key, count]) => `• ${workTypeLabels[key] ?? key}: ${count}`)
+          .join("  ")}`,
       },
     },
     { type: "divider" },

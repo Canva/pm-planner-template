@@ -2,12 +2,13 @@
 //
 // This does NOT seed any team members, tasks, or squads (those belong to
 // whichever team owns this instance and should be added through the app).
-// It only does two things:
+// It only does three things:
 //   1. Applies the generic phase pipeline defaults (prisma/seed-phases.sql)
-//   2. Creates one ADMIN account so the first login has somewhere to go
+//   2. Applies the default brief types (prisma/seed-worktypes.sql)
+//   3. Creates one ADMIN account so the first login has somewhere to go
 //      (the app has no signup flow — see SETUP_GUIDE.md)
 //
-// Safe to re-run: phase seeding uses INSERT OR IGNORE, and the admin account
+// Safe to re-run: the SQL seeds use INSERT OR IGNORE, and the admin account
 // step is skipped if any UserAccount already exists.
 import { createClient } from "@libsql/client";
 import { readFileSync } from "fs";
@@ -19,8 +20,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const url = process.env.DATABASE_URL || "file:./prisma/dev.db";
 const db = createClient({ url });
 
-async function seedPhases() {
-  const raw = readFileSync(join(__dirname, "seed-phases.sql"), "utf-8");
+async function runSqlFile(filename, description) {
+  const raw = readFileSync(join(__dirname, filename), "utf-8");
   // Strip full-line comments first, THEN split on ";" — a naive split-then-filter
   // silently drops any statement that happens to follow a comment line in the
   // same semicolon-delimited chunk (bit us once already: it dropped the actual
@@ -36,7 +37,7 @@ async function seedPhases() {
   for (const statement of statements) {
     await db.execute(statement);
   }
-  console.log(`Phase pipeline defaults applied (${statements.length} statements)`);
+  console.log(`${description} applied (${statements.length} statements)`);
 }
 
 async function seedFirstAdmin() {
@@ -66,7 +67,8 @@ async function seedFirstAdmin() {
 
 async function run() {
   console.log("Seeding database...");
-  await seedPhases();
+  await runSqlFile("seed-phases.sql", "Phase pipeline defaults");
+  await runSqlFile("seed-worktypes.sql", "Brief type defaults");
   await seedFirstAdmin();
   console.log("Done!");
   process.exit(0);

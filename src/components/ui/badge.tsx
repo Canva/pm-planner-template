@@ -1,6 +1,9 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import type { WorkType, TaskStatus } from "@/types";
-import { WORK_TYPE_COLORS, STATUS_COLORS, EFFORT_COLORS, EFFORT_LABELS } from "@/types";
+import { STATUS_COLORS, EFFORT_COLORS, EFFORT_LABELS } from "@/types";
+import { useWorkTypes } from "@/lib/work-types-context";
 
 interface BadgeProps {
   label: string;
@@ -25,8 +28,9 @@ export function Badge({ label, color, className, size = "sm" }: BadgeProps) {
 }
 
 export function WorkTypeBadge({ type }: { type: WorkType }) {
-  const labels: Record<WorkType, string> = { STRATEGIC: "Strategic", TASK: "Task", BAU: "BAU", MICRO: "Micro" };
-  return <Badge label={labels[type]} color={WORK_TYPE_COLORS[type]} />;
+  const { workTypeMeta } = useWorkTypes();
+  const meta = workTypeMeta[type];
+  return <Badge label={meta?.label ?? type} color={meta?.color} />;
 }
 
 export function StatusBadge({ status }: { status: TaskStatus }) {

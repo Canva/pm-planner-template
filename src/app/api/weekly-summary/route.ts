@@ -137,9 +137,11 @@ export async function GET(req: NextRequest) {
       return !isBefore(due, todayStart) && isBefore(due, addDays(todayStart, 3));
     });
 
-    // Work type breakdown
-    const workTypeBreakdown = { STRATEGIC: 0, TASK: 0, BAU: 0, MICRO: 0 };
-    for (const t of activeTasks) workTypeBreakdown[t.workType]++;
+    // Work type breakdown — brief types are admin-configurable (Admin > Brief
+    // Types), so this tallies whatever workType values actually appear rather
+    // than a fixed set of keys.
+    const workTypeBreakdown: Record<string, number> = {};
+    for (const t of activeTasks) workTypeBreakdown[t.workType] = (workTypeBreakdown[t.workType] ?? 0) + 1;
 
     // Member summaries
     const memberSummaries: MemberWeeklySummary[] = members.map((member) => {

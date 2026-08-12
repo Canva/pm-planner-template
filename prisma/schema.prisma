@@ -126,7 +126,9 @@ model Task {
   description        String?
   status             TaskStatus     @default(INTAKE)
   effort             Int            @default(2)
-  workType           WorkType       @default(TASK)
+  // A String, not the WorkType enum — brief types are admin-configurable
+  // (Admin > Brief Types / WorkTypeConfig), so arbitrary custom keys are valid.
+  workType           String         @default("TASK")
   startDate          DateTime?
   dueDate            DateTime?
   deadline           DateTime?
@@ -224,9 +226,10 @@ model NextStepChecklistItem {
 
 model WorkTypeConfig {
   id        String   @id @default(cuid())
-  name      String   @unique
-  workType  WorkType @unique
+  key       String   @unique
+  label     String
   color     String
+  sortOrder Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

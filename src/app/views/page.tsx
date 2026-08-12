@@ -7,7 +7,8 @@ import { cn } from "@/lib/utils";
 import { todayPH } from "@/lib/tz";
 import { buildPhaseRuns, ROW_GAP } from "@/lib/phase-day-slots";
 import { usePhases } from "@/lib/phases-context";
-import { WORK_TYPE_COLORS, WORK_TYPE_LABELS, PHASE_META, PHASE_ORDER, TaskPhase, lockedPhaseForRole, coversAllPhases } from "@/types";
+import { useWorkTypes } from "@/lib/work-types-context";
+import { WORK_TYPE_ORDER, PHASE_META, PHASE_ORDER, TaskPhase, lockedPhaseForRole, coversAllPhases } from "@/types";
 import {
   format, startOfMonth, endOfMonth, startOfWeek, endOfWeek,
   eachDayOfInterval, isSameMonth, isSameDay,
@@ -22,8 +23,6 @@ import type { Task, TeamMember, WorkType, Assignment, NextStep, Squad, PhaseType
 
 type ViewMode = "month" | "squads" | "external";
 
-const ALL_WORK_TYPES: WorkType[] = ["STRATEGIC", "TASK", "BAU", "MICRO"];
-
 // ── Work-type multi-select filter ────────────────────────────────────────────
 function TypeFilterDropdown({
   selected, onChange,
@@ -31,11 +30,12 @@ function TypeFilterDropdown({
   selected: WorkType[];
   onChange: (types: WorkType[]) => void;
 }) {
+  const { workTypeOrder, workTypeMeta } = useWorkTypes();
   const [open, setOpen] = useState(false);
   const label =
-    selected.length === ALL_WORK_TYPES.length ? "All types" :
+    selected.length === workTypeOrder.length ? "All types" :
     selected.length === 0 ? "No types" :
-    selected.length === 1 ? WORK_TYPE_LABELS[selected[0]] :
+    selected.length === 1 ? (workTypeMeta[selected[0]]?.label ?? selected[0]) :
     `${selected.length} types`;
 
   function toggle(type: WorkType) {
@@ -58,13 +58,13 @@ function TypeFilterDropdown({
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
           <div className="absolute right-0 top-full mt-1 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-20 py-1">
             <button
-              onClick={() => onChange(selected.length === ALL_WORK_TYPES.length ? [] : ALL_WORK_TYPES)}
+              onClick={() => onChange(selected.length === workTypeOrder.length ? [] : workTypeOrder)}
               className="w-full text-left px-3 py-1.5 text-xs font-medium text-indigo-600 hover:bg-gray-50 transition-colors"
             >
-              {selected.length === ALL_WORK_TYPES.length ? "Deselect all" : "Select all"}
+              {selected.length === workTypeOrder.length ? "Deselect all" : "Select all"}
             </button>
             <div className="border-t border-gray-100 my-1" />
-            {ALL_WORK_TYPES.map((type) => (
+            {workTypeOrder.map((type) => (
               <label
                 key={type}
                 className="flex items-center gap-2 px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors"
@@ -75,7 +75,7 @@ function TypeFilterDropdown({
                   onChange={() => toggle(type)}
                   className="w-3.5 h-3.5 rounded accent-indigo-600"
                 />
-                {WORK_TYPE_LABELS[type]}
+                {workTypeMeta[type]?.label ?? type}
               </label>
             ))}
           </div>
@@ -412,6 +412,7 @@ function FilterSelect({
 
 // ── Editable note entry for a single brief ───────────────────────────────────
 function NoteEntry({ task, onSave }: { task: Task; onSave: (notes: string) => void }) {
+  const { workTypeMeta } = useWorkTypes();
   const [value, setValue] = useState(task.notes ?? "");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -428,7 +429,7 @@ function NoteEntry({ task, onSave }: { task: Task; onSave: (notes: string) => vo
   return (
     <div className="px-3 py-2 space-y-1">
       <a href={`/tasks/${task.id}`} className="flex items-center gap-1.5 group">
-        <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: WORK_TYPE_COLORS[task.workType] }} />
+        <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: workTypeMeta[task.workType]?.color ?? "#9ca3af" }} />
         <span className="text-[11px] font-semibold text-gray-700 truncate group-hover:text-indigo-600 leading-tight">
           {task.name}
         </span>
@@ -483,6 +484,7 @@ function SquadSection({
   notesWidthClass: string;
 }) {
   const { roundTagPhases } = usePhases();
+  const { workTypeMeta } = useWorkTypes();
   const squadMemberIds = squad.members.map((m) => m.teamMemberId);
   const squadMembers = members.filter((m) => squadMemberIds.includes(m.id));
 
@@ -833,7 +835,7 @@ function SquadSection({
 
               const isDone = task.status === "DONE" || task.status === "CANCELLED";
               const isOnHold = task.status === "ON_HOLD";
-              const briefBg = isDone || isOnHold ? "#9ca3af" : WORK_TYPE_COLORS[task.workType];
+              const briefBg = isDone || isOnHold ? "#9ca3af" : (workTypeMeta[task.workType]?.color ?? "#9ca3af");
               const isDraggingThis = draggingTask?.task.id === task.id;
 
               return (
@@ -1022,7 +1024,7 @@ function SquadSection({
                   >
                     <span
                       className="w-2 h-2 rounded-full shrink-0"
-                      style={{ backgroundColor: WORK_TYPE_COLORS[task.workType] }}
+                      style={{ backgroundColor: (workTypeMeta[task.workType]?.color ?? "#9ca3af") }}
                     />
                     <span className="text-xs font-semibold text-gray-800 truncate group-hover:text-indigo-700">
                       {task.name}
@@ -1129,6 +1131,7 @@ function ExternalSection({
   weekDays: Date[];
   holidays: Holiday[];
 }) {
+  const { workTypeMeta } = useWorkTypes();
   const toLeft = (col: number) => `${(col - 1) * 20}%`;
   const toWidth = (span: number) => `${span * 20}%`;
   const GAP = 4;
@@ -1191,7 +1194,7 @@ function ExternalSection({
           {weekBriefs.map(({ task, temp, ganttPhases, range }) => {
             const isDone = task.status === "DONE" || task.status === "CANCELLED";
             const isOnHold = task.status === "ON_HOLD";
-            const briefBg = isDone || isOnHold ? "#9ca3af" : WORK_TYPE_COLORS[task.workType];
+            const briefBg = isDone || isOnHold ? "#9ca3af" : (workTypeMeta[task.workType]?.color ?? "#9ca3af");
 
             // Stack overlapping phase pills into rows
             const rowEnds: number[] = [];
@@ -1286,10 +1289,20 @@ function CalendarTab({
   onPhaseAmPmUpdate: (taskId: string, updates: Array<{ phaseId: string; amPm: "AM" | "PM" | null }>) => Promise<void>;
   onPhaseReorder: (taskId: string, phaseAId: string, phaseBId: string) => Promise<void>;
 }) {
+  const { workTypeOrder, workTypeMeta } = useWorkTypes();
   const [currentDate, setCurrentDate] = useState(todayPH());
   const [view, setView] = useState<ViewMode>("squads");
   const [filterValue, setFilterValue] = useState("all");
-  const [filterTypes, setFilterTypes] = useState<WorkType[]>(ALL_WORK_TYPES);
+  const [filterTypes, setFilterTypes] = useState<WorkType[]>(WORK_TYPE_ORDER);
+  // Sync once the real (admin-configurable) list loads, without clobbering
+  // any manual filter selection the user makes afterward.
+  const didInitFilterTypes = useRef(false);
+  useEffect(() => {
+    if (!didInitFilterTypes.current && workTypeOrder.length) {
+      setFilterTypes(workTypeOrder);
+      didInitFilterTypes.current = true;
+    }
+  }, [workTypeOrder]);
   const [notesWidthKey, setNotesWidthKey] = useState<0 | 1 | 2 | 3>(0);
   const NOTES_WIDTHS = ["w-52", "w-72", "w-96", "hidden"] as const;
   const NOTES_LABELS = ["S", "M", "L", "Hide"] as const;
@@ -1544,7 +1557,7 @@ function CalendarTab({
                     : "text-white cursor-grab active:cursor-grabbing",
                   isDraggingThis && "opacity-40"
                 )}
-                style={isDone || isOnHold ? undefined : { backgroundColor: WORK_TYPE_COLORS[task.workType] }}
+                style={isDone || isOnHold ? undefined : { backgroundColor: (workTypeMeta[task.workType]?.color ?? "#9ca3af") }}
                 title={`${task.name}${activePhase ? ` · ${PHASE_META[activePhase.type as PhaseType]?.label ?? activePhase.type}` : ""}${isDone ? ` (${task.status})` : ""}`}
                 onClick={(e) => { e.stopPropagation(); window.location.href = `/tasks/${task.id}`; }}
               >
@@ -1952,7 +1965,7 @@ function CalendarTab({
 
                             const isDone = task.status === "DONE" || task.status === "CANCELLED";
                             const isOnHold = task.status === "ON_HOLD";
-                            const briefBg = isDone || isOnHold ? "#9ca3af" : WORK_TYPE_COLORS[task.workType];
+                            const briefBg = isDone || isOnHold ? "#9ca3af" : (workTypeMeta[task.workType]?.color ?? "#9ca3af");
                             const isDraggingThis = monthGanttDragging?.task.id === task.id && monthGanttDragging.weekIdx === weekIdx;
 
                             return (

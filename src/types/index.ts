@@ -14,7 +14,8 @@ export interface UserAccount {
   createdAt: string;
   updatedAt: string;
 }
-export type WorkType = "STRATEGIC" | "TASK" | "BAU" | "MICRO";
+/** Built-in brief types — kept as defaults/fallback; any custom string is also valid */
+export type WorkType = "STRATEGIC" | "TASK" | "BAU" | "MICRO" | string;
 export type TaskStatus = "INTAKE" | "IN_PROGRESS" | "REVIEW" | "BLOCKED" | "ON_HOLD" | "DONE" | "CANCELLED";
 export type Effort = 1 | 2 | 3;
 export type DurationType = "FULL_DAY" | "HALF_DAY" | "TWO_HOURS";
@@ -214,12 +215,7 @@ export interface MemberWeeklySummary {
   capacityTotal: number;
 }
 
-export interface WorkTypeBreakdown {
-  STRATEGIC: number;
-  TASK: number;
-  BAU: number;
-  MICRO: number;
-}
+export type WorkTypeBreakdown = Record<string, number>;
 
 export interface Notification {
   id: string;
@@ -284,6 +280,8 @@ export const PHASE_META: Record<PhaseType, {
   LOCALIZATION:         { label: "Localization",        color: "#ec4899", estMin: 3,    estMax: null, capacityHoursPerDay: 4 },
 };
 
+export const WORK_TYPE_ORDER: string[] = ["STRATEGIC", "TASK", "BAU", "MICRO"];
+
 export const WORK_TYPE_COLORS: Record<WorkType, string> = {
   STRATEGIC: "#6366f1",
   TASK: "#f59e0b",
@@ -297,6 +295,17 @@ export const WORK_TYPE_LABELS: Record<WorkType, string> = {
   BAU: "BAU",
   MICRO: "Micro",
 };
+
+// BAU isn't just a label: it skips the phase pipeline entirely and changes
+// several field labels across the app (see intake/page.tsx, kanban-board.tsx,
+// tasks/[id]/page.tsx). Renaming/recoloring/deleting it from Admin > Brief
+// Types would silently break those checks, so the admin UI and its API lock
+// this one key down. Everything else is freely editable.
+export const PROTECTED_WORK_TYPES: string[] = ["BAU"];
+
+export function isProtectedWorkType(key: string): boolean {
+  return PROTECTED_WORK_TYPES.includes(key);
+}
 
 export const STATUS_COLORS: Record<TaskStatus, string> = {
   INTAKE: "#94a3b8",
