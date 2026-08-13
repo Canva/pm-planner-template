@@ -24,6 +24,25 @@ CREATE TABLE IF NOT EXISTS "TeamMember" (
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
 );
+INSERT INTO TeamMember VALUES('cmsqzmdyv0003tiyu1w2auvqk','Kyla Baltazar','kyla@canva.com','Brand Designer',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T03:57:47.191+00:00','2026-08-13T03:57:47.191+00:00');
+INSERT INTO TeamMember VALUES('cmsqzmxjw0004tiyua1x6cn0b','Arvic Alvarez','arvic@canva.com','Brand Designer',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T03:58:12.572+00:00','2026-08-13T03:58:12.572+00:00');
+INSERT INTO TeamMember VALUES('cmsqznjsy0005tiyuig4j2cpf','Kitkat Lastimosa','kitkat@canva.com','Brand Designer',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T03:58:41.410+00:00','2026-08-13T03:58:41.410+00:00');
+INSERT INTO TeamMember VALUES('cmsqzo4kk0006tiyuqyechuk0','Steph Whitehouse','stephw@canva.com','Art Director',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T03:59:08.324+00:00','2026-08-13T03:59:08.324+00:00');
+INSERT INTO TeamMember VALUES('cmsqzooho0007tiyuz87yxv7l','Andy Enriquez','andye@canva.com','Copywriter',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T03:59:34.140+00:00','2026-08-13T03:59:34.140+00:00');
+INSERT INTO TeamMember VALUES('cmsqzp3180008tiyuvicvcspv','Vinny Lamorena','vlamorena@canva.com','Copywriter',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T03:59:52.988+00:00','2026-08-13T03:59:52.988+00:00');
+INSERT INTO TeamMember VALUES('cmsqzpph40009tiyuk7qz0x3u','Christian Love','christianlove@canva.com','Videographer',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:00:22.072+00:00','2026-08-13T04:00:22.072+00:00');
+INSERT INTO TeamMember VALUES('cmsqzqbq5000atiyuadkrcbu1','Lydia Proudlove','proudlove@canva.com','Videographer',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:00:50.909+00:00','2026-08-13T04:00:50.909+00:00');
+INSERT INTO TeamMember VALUES('cmsr0gxpl000btiyuw6t4t7bd','Jess Holmes','jessh@canva.com','Videographer',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:21:32.457+00:00','2026-08-13T04:21:32.457+00:00');
+INSERT INTO TeamMember VALUES('cmsr0hlfv000ctiyuwo47tgeo','Jess Edwards','jess.e@canva.com','Videographer',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:22:03.211+00:00','2026-08-13T04:22:03.211+00:00');
+INSERT INTO TeamMember VALUES('cmsr0iegh000dtiyumgs0y2xc','Sean Pointing','seanp@canva.com','Motion Designer',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:22:40.817+00:00','2026-08-13T04:22:40.817+00:00');
+INSERT INTO TeamMember VALUES('cmsr0iucr000etiyuo6lxfy7z','Kristen Uy','kristen.u@canva.com','Motion Designer',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:23:01.419+00:00','2026-08-13T04:23:01.419+00:00');
+INSERT INTO TeamMember VALUES('cmsr0j9f8000ftiyujl6ma1zz','Lyra Bertulfo','lyrscb@canva.com','Motion Designer',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:23:20.948+00:00','2026-08-13T04:23:20.948+00:00');
+INSERT INTO TeamMember VALUES('cmsr0joac000gtiyu0m5wztt5','Kat Agapito','katagapito@canva.com','Motion Designer',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:23:40.212+00:00','2026-08-13T04:23:40.212+00:00');
+INSERT INTO TeamMember VALUES('cmsr0kvz6000htiyu06tyv0f8','Judea Bartolome','mbartolome@canva.com','Graphic Designer',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:24:36.834+00:00','2026-08-13T04:24:36.834+00:00');
+INSERT INTO TeamMember VALUES('cmsr0lacp000itiyuift9otk3','Simon Jackson','simonj@canva.com','Creative Director',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:24:55.465+00:00','2026-08-13T04:24:55.465+00:00');
+INSERT INTO TeamMember VALUES('cmsr0lrp6000jtiyuhwaqeghm','Gina Talboys','gtalboys@canva.com','Creative Ops',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:25:17.946+00:00','2026-08-13T04:25:17.946+00:00');
+INSERT INTO TeamMember VALUES('cmsr0m2z9000ktiyuba7vf5hq','Ellaine Llave','marieaellaine@canva.com','Creative Ops',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:25:32.565+00:00','2026-08-13T04:25:32.565+00:00');
+INSERT INTO TeamMember VALUES('cmsr0miw1000ltiyuv55c1kif','Lex Nocheseda','lexnoche@canva.com','Content Admin',5.0,'["Mon","Tue","Wed","Thu","Fri"]',NULL,1,'2026-08-13T04:25:53.185+00:00','2026-08-13T04:25:53.185+00:00');
 CREATE TABLE IF NOT EXISTS "GeneralTodo" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "teamMemberId" TEXT NOT NULL,
@@ -108,6 +127,7 @@ CREATE TABLE IF NOT EXISTS "Task" (
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
 );
+INSERT INTO Task VALUES('cmsr2fwe4000wtiyu2li4ecio',NULL,NULL,'Q3 2026 GAC/PMAX Evergreen','Batch 1','DONE',2,'CHANNEL_SPECIFIC','2026-07-31T00:00:00.000+00:00','2026-08-12T00:00:00.000+00:00','2026-08-12T00:00:00.000+00:00','https://canva-group.monday.com/boards/9599240736/pulses/12720765383',NULL,NULL,'https://icnk.io/u/7s86CnrJPqEv/',NULL,NULL,'[{"name":"Working Deck","url":"https://canva.link/f196jha3a1yim6f"},{"name":"Rollout Deck","url":"https://canva.link/2bqib2m90bx0b4s"},{"name":"Lucidlink","url":"https://app.lucidlink.com/l/1/ZmI4OGQ2ZWItYTViZC00NjFhLWJhOGEtYTkxZjM2MTM1ZTRkL2NjNTU2ODg2LWU4YTQtNDdmZC1hZTg0LTRkNjk2OTVkNTg3OS8xNjE6MTkwODIyLzQ2NTo0MTgzNg/AQAAAAAAAABEHIn2mw7WBSCDQDneCfh4wv6U3LHIHc2JsIo0ClA"},{"name":"GAC Brief","url":"https://www.canva.com/design/DAXOwkrvT7w/XDCAz_lCPRSPDCb2LypCig/edit"},{"name":"PMAX Brief","url":"https://www.canva.com/design/DAXOwhTpYPQ/RgsfU7iss3_bkXEEL84UDw/edit"}]',NULL,NULL,'GRMA26068','GAC/PMAX','Liz Mofu',NULL,'P2 - Important, Flexible','FIXED',0,NULL,0,0,'2026-08-13T05:16:43.324+00:00','2026-08-13T05:56:55.964+00:00');
 CREATE TABLE IF NOT EXISTS "Assignment" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "taskId" TEXT NOT NULL,
@@ -124,6 +144,14 @@ CREATE TABLE IF NOT EXISTS "Assignment" (
     CONSTRAINT "Assignment_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Task" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT "Assignment_teamMemberId_fkey" FOREIGN KEY ("teamMemberId") REFERENCES "TeamMember" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
+INSERT INTO Assignment VALUES('cmsr3pli90016tiyuq3ceatnv','cmsr2fwe4000wtiyu2li4ecio','cmsqzp3180008tiyuvicvcspv','["cmsr3jfma000ytiyu9pp0h46j"]','2026-07-31T00:00:00.000+00:00','2026-07-31T00:00:00.000+00:00',1.0,'TWO_HOURS',0.25,NULL,'2026-08-13T05:52:15.393+00:00','2026-08-13T05:52:15.393+00:00');
+INSERT INTO Assignment VALUES('cmsr3plit0017tiyuegy5r3n5','cmsr2fwe4000wtiyu2li4ecio','cmsr0lacp000itiyuift9otk3','["cmsr3jfma000ytiyu9pp0h46j"]','2026-07-31T00:00:00.000+00:00','2026-07-31T00:00:00.000+00:00',1.0,'TWO_HOURS',0.25,NULL,'2026-08-13T05:52:15.413+00:00','2026-08-13T05:52:15.413+00:00');
+INSERT INTO Assignment VALUES('cmsr3pljd0018tiyu0hs6b1l9','cmsr2fwe4000wtiyu2li4ecio','cmsqzooho0007tiyuz87yxv7l','["cmsr3jfma000ytiyu9pp0h46j"]','2026-07-31T00:00:00.000+00:00','2026-07-31T00:00:00.000+00:00',1.0,'TWO_HOURS',0.25,NULL,'2026-08-13T05:52:15.433+00:00','2026-08-13T05:52:15.433+00:00');
+INSERT INTO Assignment VALUES('cmsr3pljw0019tiyujnp904ac','cmsr2fwe4000wtiyu2li4ecio','cmsr0m2z9000ktiyuba7vf5hq','["cmsr3jfma000ytiyu9pp0h46j"]','2026-07-31T00:00:00.000+00:00','2026-07-31T00:00:00.000+00:00',1.0,'TWO_HOURS',0.25,NULL,'2026-08-13T05:52:15.452+00:00','2026-08-13T05:52:15.452+00:00');
+INSERT INTO Assignment VALUES('cmsr3plkh001atiyus5szl4cu','cmsr2fwe4000wtiyu2li4ecio','cmsr0kvz6000htiyu06tyv0f8','["cmsr3jfma000ytiyu9pp0h46j"]','2026-07-31T00:00:00.000+00:00','2026-07-31T00:00:00.000+00:00',1.0,'TWO_HOURS',0.25,NULL,'2026-08-13T05:52:15.473+00:00','2026-08-13T05:52:15.473+00:00');
+INSERT INTO Assignment VALUES('cmsr3pll0001btiyuaw6n7b7z','cmsr2fwe4000wtiyu2li4ecio','cmsr0iucr000etiyuo6lxfy7z','["cmsr3jfma000ytiyu9pp0h46j"]','2026-07-31T00:00:00.000+00:00','2026-07-31T00:00:00.000+00:00',1.0,'TWO_HOURS',0.25,NULL,'2026-08-13T05:52:15.492+00:00','2026-08-13T05:52:15.492+00:00');
+INSERT INTO Assignment VALUES('cmsr3pllk001ctiyudadcw9fz','cmsr2fwe4000wtiyu2li4ecio','cmsr0joac000gtiyu0m5wztt5','["cmsr3jfma000ytiyu9pp0h46j"]','2026-07-31T00:00:00.000+00:00','2026-07-31T00:00:00.000+00:00',1.0,'TWO_HOURS',0.25,NULL,'2026-08-13T05:52:15.512+00:00','2026-08-13T05:52:15.512+00:00');
+INSERT INTO Assignment VALUES('cmsr3plm4001dtiyu8f5tjfc6','cmsr2fwe4000wtiyu2li4ecio','cmsqznjsy0005tiyuig4j2cpf','["cmsr3jfma000ytiyu9pp0h46j"]','2026-07-31T00:00:00.000+00:00','2026-07-31T00:00:00.000+00:00',1.0,'TWO_HOURS',0.25,NULL,'2026-08-13T05:52:15.532+00:00','2026-08-13T05:52:15.532+00:00');
 CREATE TABLE IF NOT EXISTS "TempAssignment" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "taskId" TEXT NOT NULL,
@@ -176,6 +204,7 @@ CREATE TABLE IF NOT EXISTS "Notification" (
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "Notification_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Task" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
+INSERT INTO Notification VALUES('cmsr2fweg000xtiyupp60cdp5','NEW_INTAKE','New intake task','"Q3 2026 GAC/PMAX Evergreen" has been added to the intake queue','cmsr2fwe4000wtiyu2li4ecio',0,0,'2026-08-13T05:16:43.336+00:00');
 CREATE TABLE IF NOT EXISTS "SlackTemplate" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "key" TEXT NOT NULL,
@@ -232,6 +261,13 @@ CREATE TABLE IF NOT EXISTS "TaskPhase" (
     "updatedAt" DATETIME NOT NULL,
     CONSTRAINT "TaskPhase_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Task" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
+INSERT INTO TaskPhase VALUES('cmsr3jfma000ytiyu9pp0h46j','cmsr2fwe4000wtiyu2li4ecio','KICKOFF','NOT_STARTED','2026-07-31T00:00:00.000+00:00','2026-07-31T00:00:00.000+00:00',NULL,NULL,2,NULL,'2026-08-13T05:47:27.826+00:00','2026-08-13T05:47:27.826+00:00');
+INSERT INTO TaskPhase VALUES('cmsr3jyjn000ztiyum273pqgf','cmsr2fwe4000wtiyu2li4ecio','CREATIVE_DEVELOPMENT','NOT_STARTED','2026-08-03T00:00:00.000+00:00','2026-08-06T00:00:00.000+00:00',NULL,NULL,4,NULL,'2026-08-13T05:47:52.355+00:00','2026-08-13T05:47:52.355+00:00');
+INSERT INTO TaskPhase VALUES('cmsr3ljgu0011tiyuyyk7dsel','cmsr2fwe4000wtiyu2li4ecio','CD_REVIEW_WIPS','NOT_STARTED','2026-08-06T00:00:00.000+00:00','2026-08-06T00:00:00.000+00:00',NULL,NULL,99,NULL,'2026-08-13T05:49:06.126+00:00','2026-08-13T05:49:06.126+00:00');
+INSERT INTO TaskPhase VALUES('cmsr3lz2t0012tiyuu43o8ez9','cmsr2fwe4000wtiyu2li4ecio','CREATIVE_REFINEMENT','NOT_STARTED','2026-08-07T00:00:00.000+00:00','2026-08-10T00:00:00.000+00:00',NULL,NULL,7,NULL,'2026-08-13T05:49:26.357+00:00','2026-08-13T05:49:26.357+00:00');
+INSERT INTO TaskPhase VALUES('cmsr3mbm90013tiyu4r9exzkq','cmsr2fwe4000wtiyu2li4ecio','PERMAR_REVIEW_WIPS','NOT_STARTED','2026-08-11T00:00:00.000+00:00','2026-08-11T00:00:00.000+00:00',NULL,NULL,100,'PM','2026-08-13T05:49:42.609+00:00','2026-08-13T05:56:08.053+00:00');
+INSERT INTO TaskPhase VALUES('cmsr3mrh20014tiyu52jyhdtx','cmsr2fwe4000wtiyu2li4ecio','ASSET_FINALIZATION','NOT_STARTED','2026-08-11T00:00:00.000+00:00','2026-08-12T00:00:00.000+00:00',NULL,NULL,8,NULL,'2026-08-13T05:50:03.158+00:00','2026-08-13T05:50:03.158+00:00');
+INSERT INTO TaskPhase VALUES('cmsr3mw440015tiyu02dvpwgi','cmsr2fwe4000wtiyu2li4ecio','DISPATCH','NOT_STARTED','2026-08-12T00:00:00.000+00:00','2026-08-12T00:00:00.000+00:00',NULL,NULL,101,NULL,'2026-08-13T05:50:09.172+00:00','2026-08-13T05:50:09.172+00:00');
 CREATE TABLE IF NOT EXISTS "AutomationStep" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "automationId" TEXT NOT NULL,
@@ -284,16 +320,21 @@ CREATE TABLE IF NOT EXISTS "PhaseConfig" (
     "updatedAt" DATETIME NOT NULL
 );
 INSERT INTO PhaseConfig VALUES('phase_intake','INTAKE','Intake','#94a3b8',NULL,NULL,0,0,4.0,'2026-08-13 00:39:05','2026-08-13 00:39:05');
-INSERT INTO PhaseConfig VALUES('phase_brief_review','BRIEF_REVIEW','Brief Review','#a78bfa',1,2,1,0,4.0,'2026-08-13 00:39:05','2026-08-13 00:39:05');
-INSERT INTO PhaseConfig VALUES('phase_kickoff','KICKOFF','Kickoff','#8b5cf6',1,1,2,0,4.0,'2026-08-13 00:39:05','2026-08-13 00:39:05');
-INSERT INTO PhaseConfig VALUES('phase_brainstorm','BRAINSTORM','Brainstorm','#6366f1',2,2,3,0,4.0,'2026-08-13 00:39:05','2026-08-13 00:39:05');
-INSERT INTO PhaseConfig VALUES('phase_creative_dev','CREATIVE_DEVELOPMENT','Creative Development','#3b82f6',3,5,4,0,4.0,'2026-08-13 00:39:05','2026-08-13 00:39:05');
-INSERT INTO PhaseConfig VALUES('phase_creative_rev','CREATIVE_REVIEW','Creative Review','#0ea5e9',1,2,5,1,4.0,'2026-08-13 00:39:05','2026-08-13 00:39:05');
-INSERT INTO PhaseConfig VALUES('phase_sh_review','SH_REVIEW','SH Review','#f59e0b',1,2,6,1,4.0,'2026-08-13 00:39:05','2026-08-13 00:39:05');
-INSERT INTO PhaseConfig VALUES('phase_refinement','CREATIVE_REFINEMENT','Creative Refinement','#f97316',3,3,7,0,4.0,'2026-08-13 00:39:05','2026-08-13 00:39:05');
-INSERT INTO PhaseConfig VALUES('phase_asset_final','ASSET_FINALIZATION','Asset Finalization','#10b981',2,2,8,0,4.0,'2026-08-13 00:39:05','2026-08-13 00:39:05');
-INSERT INTO PhaseConfig VALUES('phase_build','BUILD','Build','#14b8a6',3,3,9,0,4.0,'2026-08-13 00:39:05','2026-08-13 00:39:05');
-INSERT INTO PhaseConfig VALUES('phase_localization','LOCALIZATION','Localization','#ec4899',3,NULL,10,0,4.0,'2026-08-13 00:39:05','2026-08-13 00:39:05');
+INSERT INTO PhaseConfig VALUES('phase_brief_review','BRIEF_REVIEW','Brief Review','#feffd1',1,2,1,0,4.0,'2026-08-13 00:39:05','2026-08-13T04:42:55.954+00:00');
+INSERT INTO PhaseConfig VALUES('phase_kickoff','KICKOFF','Kickoff','#e2dc3c',1,1,2,0,1.0,'2026-08-13 00:39:05','2026-08-13T05:52:34.928+00:00');
+INSERT INTO PhaseConfig VALUES('phase_brainstorm','BRAINSTORM','Brainstorm','#ffbd80',2,2,3,0,4.0,'2026-08-13 00:39:05','2026-08-13T04:43:07.894+00:00');
+INSERT INTO PhaseConfig VALUES('phase_creative_dev','CREATIVE_DEVELOPMENT','Creative Development','#ff8b1f',3,5,4,0,-1.0,'2026-08-13 00:39:05','2026-08-13T04:43:19.784+00:00');
+INSERT INTO PhaseConfig VALUES('phase_creative_rev','CREATIVE_REVIEW','CD Review (Concepts)','#ffb8de',1,2,6,1,4.0,'2026-08-13 00:39:05','2026-08-13T04:43:45.222+00:00');
+INSERT INTO PhaseConfig VALUES('phase_sh_review','SH_REVIEW','PerMar Review (Concepts)','#ff8abd',1,2,7,1,8.0,'2026-08-13 00:39:05','2026-08-13T04:43:56.218+00:00');
+INSERT INTO PhaseConfig VALUES('phase_refinement','CREATIVE_REFINEMENT','Creative Refinement','#c061ff',3,3,9,0,-1.0,'2026-08-13 00:39:05','2026-08-13T04:44:26.601+00:00');
+INSERT INTO PhaseConfig VALUES('phase_asset_final','ASSET_FINALIZATION','Asset Finalization and Exports','#94ffcd',2,2,13,0,-1.0,'2026-08-13 00:39:05','2026-08-13T04:45:22.289+00:00');
+INSERT INTO PhaseConfig VALUES('cmsr0pyzh000mtiyu45q3tw03','DANA_REVIEW','Dana Review  (Concepts)','#ff5ce1',1,2,8,1,8.0,'2026-08-13T04:28:34.013+00:00','2026-08-13T04:44:10.057+00:00');
+INSERT INTO PhaseConfig VALUES('cmsr0r3q7000ntiyui7drw86y','SHOOT_DAY','Shoot Day','#ff471a',NULL,NULL,5,0,8.0,'2026-08-13T04:29:26.815+00:00','2026-08-13T04:43:32.604+00:00');
+INSERT INTO PhaseConfig VALUES('cmsr123hl000otiyu2d364v97','CD_REVIEW_WIPS','CD Review (WIPs)','#add5ff',1,NULL,10,1,4.0,'2026-08-13T04:37:59.721+00:00','2026-08-13T04:44:41.371+00:00');
+INSERT INTO PhaseConfig VALUES('cmsr12nx9000ptiyubm4xvljv','PERMAR_REVIEW_WIPS','PerMar Review (WIPs)','#6678ff',1,NULL,11,1,8.0,'2026-08-13T04:38:26.205+00:00','2026-08-13T04:44:56.374+00:00');
+INSERT INTO PhaseConfig VALUES('cmsr12wcy000qtiyuz8ij2nb2','DANA_REVIEW_WIPS','Dana Review (WIPs)','#0004ff',1,2,12,1,8.0,'2026-08-13T04:38:37.138+00:00','2026-08-13T04:45:03.694+00:00');
+INSERT INTO PhaseConfig VALUES('cmsr16lhl000rtiyu1kvad273','DISPATCH','Dispatch','#41ef34',NULL,NULL,14,0,4.0,'2026-08-13T04:41:29.673+00:00','2026-08-13T04:45:44.008+00:00');
+INSERT INTO PhaseConfig VALUES('cmsr16vi3000stiyua6e75xpm','ASSET_UPLOADING','Asset Uploading','#43b66c',1,2,15,0,8.0,'2026-08-13T04:41:42.651+00:00','2026-08-13T04:46:00.569+00:00');
 CREATE TABLE IF NOT EXISTS "WorkTypeConfig" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "key" TEXT NOT NULL,
@@ -303,10 +344,10 @@ CREATE TABLE IF NOT EXISTS "WorkTypeConfig" (
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
 );
-INSERT INTO WorkTypeConfig VALUES('wt_strategic','STRATEGIC','Strategic','#6366f1',0,'2026-08-13 00:39:05','2026-08-13 00:39:05');
-INSERT INTO WorkTypeConfig VALUES('wt_task','TASK','Task','#f59e0b',1,'2026-08-13 00:39:05','2026-08-13 00:39:05');
 INSERT INTO WorkTypeConfig VALUES('wt_bau','BAU','BAU','#10b981',2,'2026-08-13 00:39:05','2026-08-13 00:39:05');
-INSERT INTO WorkTypeConfig VALUES('wt_micro','MICRO','Micro','#06b6d4',3,'2026-08-13 00:39:05','2026-08-13 00:39:05');
+INSERT INTO WorkTypeConfig VALUES('cmsr1fgn8000ttiyudhx1vmta','ADHOC','Adhoc','#f2ed64',3,'2026-08-13T04:48:23.300+00:00','2026-08-13T04:48:23.300+00:00');
+INSERT INTO WorkTypeConfig VALUES('cmsr1fpen000utiyukug4muor','CAMPAIGN','Campaign','#f41515',4,'2026-08-13T04:48:34.655+00:00','2026-08-13T04:48:34.655+00:00');
+INSERT INTO WorkTypeConfig VALUES('cmsr1g8f9000vtiyu9qg30sav','CHANNEL_SPECIFIC','Channel-specific','#6366f1',5,'2026-08-13T04:48:59.301+00:00','2026-08-13T04:48:59.301+00:00');
 CREATE UNIQUE INDEX "TeamMember_email_key" ON "TeamMember"("email");
 CREATE UNIQUE INDEX "Task_mondayItemId_key" ON "Task"("mondayItemId");
 CREATE UNIQUE INDEX "Assignment_taskId_teamMemberId_key" ON "Assignment"("taskId", "teamMemberId");
