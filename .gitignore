@@ -43,3 +43,4 @@ prisma/dev.db
 prisma/*.db
 # but keep the SQL backup tracked
 !prisma/backup.sql
+!.env.example
