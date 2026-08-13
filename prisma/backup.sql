@@ -184,6 +184,9 @@ CREATE TABLE IF NOT EXISTS "SlackTemplate" (
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
 );
+INSERT INTO SlackTemplate VALUES('cmsqt56770000tiyu7hg3o10y','brief-internal','New Brief Internal',replace(':thread: *Brief*\n*Creatives/* :brand-copywriting:  :brand-design:  :localisation: :canva-in-review: *Owner/*\n> :monday: Ticket\n:docs: Brief\n:slack: SH thread','\n',char(10)),'2026-08-13T00:56:26.275+00:00','2026-08-13T00:56:26.275+00:00');
+INSERT INTO SlackTemplate VALUES('cmsqt567j0001tiyukwtaud0k','brief-sh','New Brief SH',replace(':thread: *Brief*\n\n*Creatives/* :brand-copywriting:  :brand-design:  :localisation: :canva-in-review: *Owner/*\n\n> :monday: Ticket\n\n:docs: Brief\n\n:slack: Marketer thread','\n',char(10)),'2026-08-13T00:56:26.287+00:00','2026-08-13T00:56:26.287+00:00');
+INSERT INTO SlackTemplate VALUES('cmsqt567v0002tiyun7h2m12l','monday-summary','Monday Summary',replace('📅 Week of [date]\n\nTeam\n\nActive briefs: 0','\n',char(10)),'2026-08-13T00:56:26.299+00:00','2026-08-13T00:56:26.299+00:00');
 CREATE TABLE IF NOT EXISTS "AppSettings" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "appTitle" TEXT NOT NULL DEFAULT 'Lifecycle Planner',
